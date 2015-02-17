@@ -60,10 +60,11 @@ func TestOK_Pack(t *testing.T) {
 	// create packing infomation
 	pinfo := CreatePackingInfo(512, 512)
 	for i := 0; i < 10; i++ {
+		fileID := "img_" + strconv.FormatUint(uint64(i), 10) + ".png"
 		randR := uint8(rand.Intn(255));
 		randG := uint8(rand.Intn(255));
 		randB := uint8(rand.Intn(255));
-		pinfo.AddImage(strconv.FormatUint(uint64(i), 10), createImage(rand.Intn(255), rand.Intn(255), color.RGBA{randR,randG,randB,0x88}))
+		pinfo.AddImage(fileID, createImage(rand.Intn(255), rand.Intn(255), color.RGBA{randR,randG,randB,0x88}))
 	}
 	
 	// pack
@@ -97,7 +98,7 @@ func TestOK_Pack(t *testing.T) {
 	// output image file
 	var names []string
 	for i, v := range pimgs {
-		var name = strconv.FormatUint(uint64(i), 10) + ".png"
+		var name = "txatlas_" + strconv.FormatUint(uint64(i), 10) + ".png"
 		err = ioutil.WriteFile("output/" + name, v, 0777)
 		if err != nil {
 			t.Error(err)
